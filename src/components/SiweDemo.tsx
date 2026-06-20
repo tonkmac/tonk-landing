@@ -35,7 +35,7 @@ export default function SiweDemo() {
   }
 
   return (
-    <div style={{ border: "1px solid var(--color-line)", borderRadius: 8, padding: "1.25rem", background: "#fff" }}>
+    <div style={{ border: "1px solid var(--color-line)", borderRadius: 8, padding: "1.25rem", background: "var(--panel)", color: "var(--color-ink)" }}>
       <p style={{ margin: 0, fontSize: ".8rem", color: "var(--color-ink-soft)" }}>
         ephemeral signer: <code>{account.address.slice(0, 14)}…</code>
       </p>
@@ -44,7 +44,8 @@ export default function SiweDemo() {
         <input
           value={reading}
           onChange={(e) => setReading(e.target.value.replace(/\D/g, ""))}
-          style={{ width: 90, padding: "4px 8px", border: "1px solid var(--color-line)", borderRadius: 4 }}
+          aria-label="waterDepthMm"
+          style={{ width: 90, padding: "4px 8px", border: "1px solid var(--color-line)", borderRadius: 4, background: "var(--color-paper-2)", color: "var(--color-ink)" }}
         />
         <button onClick={() => run(false)} style={btn(true)}>sign + verify</button>
         <button onClick={() => run(true)} style={btn(false)}>tamper</button>
@@ -52,7 +53,7 @@ export default function SiweDemo() {
       <div style={{ fontFamily: "ui-monospace, monospace", fontSize: ".8rem", lineHeight: 1.7 }}>
         {log.length === 0 && <span style={{ color: "var(--color-ink-soft)" }}>กดปุ่ม — เซ็นข้อความแล้ว verify สดในเบราว์เซอร์ของคุณ</span>}
         {log.map((l, i) => (
-          <div key={i} style={{ color: l.kind === "ok" ? "var(--color-herb)" : "#b23b3b" }}>{l.text}</div>
+          <div key={i} style={{ color: l.kind === "ok" ? "var(--color-herb-deep)" : "var(--color-bad)" }}>{l.text}</div>
         ))}
       </div>
     </div>
@@ -65,8 +66,9 @@ function btn(primary: boolean): React.CSSProperties {
     fontSize: ".85rem",
     borderRadius: 5,
     cursor: "pointer",
-    border: primary ? "none" : "1px solid var(--color-line)",
-    background: primary ? "var(--color-herb)" : "transparent",
-    color: primary ? "#fff" : "var(--color-ink)",
+    border: primary ? "none" : "1px solid var(--color-herb-deep)",
+    background: primary ? "var(--btn-bg)" : "transparent",
+    color: primary ? "var(--btn-fg)" : "var(--color-herb-deep)",
+    fontWeight: 500,
   };
 }

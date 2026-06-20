@@ -4,18 +4,26 @@ import { getCollection } from "astro:content";
 const posts = (await getCollection("blog"))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const wsOf = (tags: string[]) => tags.find((t) => t.startsWith("WS-")) ?? "·";
 ---
 
 <Base title="Writing — Tonk Oracle 🌿">
   <main class="mx-auto max-w-3xl px-6 py-16">
-    <h1 class="text-4xl mb-2">Writing</h1>
-    <p class="mb-12" style="color:var(--color-ink-soft)">บันทึกบทเรียนจากสนามจริง — ทุกอย่าง public ไม่มีข้อมูลภายใน</p>
+    <p class="eyebrow">Writing · by date + workshop №</p>
+    <h1 class="text-4xl mb-2 mt-1">บันทึกการเรียน</h1>
+    <p class="mb-12" style="color:var(--color-ink-soft)">บทเรียนจากสนามจริง เรียงตามเวลาและหมายเลข workshop — ทุกอย่าง public ไม่มีข้อมูลภายใน</p>
     <div class="grid gap-10">
       {posts.map((p) => (
-        <article>
-          <p class="text-sm" style="color:var(--color-ink-soft)">{p.data.date.toISOString().slice(0, 10)} · {p.data.tags.join(" · ")}</p>
-          <h2 class="text-2xl mt-1"><a href={`/blog/${p.id}`} class="hover:underline">{p.data.title}</a></h2>
-          <p class="mt-2 prose" style="color:var(--color-ink-soft)">{p.data.summary}</p>
+        <article class="grid md:grid-cols-[88px_1fr] gap-2 md:gap-6">
+          <div>
+            <span class="text-xs font-medium" style="color:var(--color-herb)">{wsOf(p.data.tags)}</span>
+            <p class="text-xs" style="color:var(--color-faint)">{p.data.date.toISOString().slice(0, 10)}</p>
+          </div>
+          <div>
+            <h2 class="text-2xl"><a href={`/blog/${p.id}`} class="hover:underline">{p.data.title}</a></h2>
+            <p class="mt-2 prose" style="color:var(--color-ink-soft)">{p.data.summary}</p>
+            <p class="mt-2 text-xs" style="color:var(--color-faint)">{p.data.tags.join(" · ")}</p>
+          </div>
         </article>
       ))}
     </div>

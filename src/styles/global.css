@@ -1,20 +1,71 @@
 @import "tailwindcss";
 
 /* Tonk Oracle — refined editorial. Craft borrowed from impeccable (OKLCH, restraint,
-   typography-first), identity is my own: fresh herb on warm paper. No neon, no glassmorphism. */
+   typography-first), identity is my own: fresh herb on warm paper. No neon, no glassmorphism.
+   Three themes (paper / white / dark) — all tuned for WCAG-AA readability (body ≥ 4.5:1). */
 @theme {
-  --color-paper:     oklch(97.5% 0.011 110);   /* warm paper ground */
-  --color-paper-2:   oklch(95% 0.013 110);      /* raised panel */
-  --color-ink:       oklch(22% 0.018 150);      /* warm near-black, faint green */
-  --color-ink-soft:  oklch(46% 0.018 150);      /* body muted */
-  --color-faint:     oklch(60% 0.012 150);      /* captions */
-  --color-line:      oklch(22% 0.02 150 / 0.14);/* hairline */
-  --color-herb:      oklch(52% 0.13 150);       /* refined herb green accent */
-  --color-herb-deep: oklch(42% 0.10 152);
-  --color-herb-soft: oklch(72% 0.10 148);
-
   --font-display: "Fraunces", "Noto Serif Thai", Georgia, serif;
   --font-sans:    "IBM Plex Sans Thai", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Paper (default): warm cream, near-black ink. body contrast ~13:1 ── */
+:root, [data-theme="paper"] {
+  --color-paper:     oklch(97.5% 0.011 110);
+  --color-paper-2:   oklch(95% 0.013 110);
+  --color-ink:       oklch(21% 0.018 150);     /* ~13:1 on paper */
+  --color-ink-soft:  oklch(40% 0.018 150);     /* ~6.3:1 — muted but AA */
+  --color-faint:     oklch(48% 0.013 150);     /* ~4.7:1 — captions, AA */
+  --color-line:      oklch(21% 0.02 150 / 0.16);
+  --color-herb:      oklch(47% 0.135 150);     /* small text ~4.7:1 AA */
+  --color-herb-deep: oklch(40% 0.11 152);      /* links ~6:1 on paper */
+  --color-herb-soft: oklch(72% 0.10 148);
+  --code-bg:         oklch(20% 0.018 150);
+  --code-fg:         oklch(93% 0.01 110);
+  --btn-bg:          oklch(45% 0.13 150);    /* white text → ~5:1 AA */
+  --btn-fg:          oklch(99% 0 0);
+  --panel:           oklch(100% 0 0);
+  --color-bad:       oklch(50% 0.17 25);     /* error text ~5:1 on panel */
+  color-scheme: light;
+}
+
+/* ── White: pure-white, maximum readability ── */
+[data-theme="white"] {
+  --color-paper:     oklch(100% 0 0);
+  --color-paper-2:   oklch(96.5% 0.004 150);
+  --color-ink:       oklch(18% 0.015 150);     /* ~16:1 */
+  --color-ink-soft:  oklch(37% 0.016 150);     /* ~7:1 */
+  --color-faint:     oklch(46% 0.012 150);     /* ~5:1 */
+  --color-line:      oklch(18% 0.02 150 / 0.18);
+  --color-herb:      oklch(45% 0.135 150);     /* small text ~5:1 AA */
+  --color-herb-deep: oklch(38% 0.11 152);      /* links ~6.6:1 */
+  --color-herb-soft: oklch(70% 0.10 148);
+  --code-bg:         oklch(18% 0.016 150);
+  --code-fg:         oklch(94% 0.008 110);
+  --btn-bg:          oklch(43% 0.13 150);    /* white text → ~5.6:1 AA */
+  --btn-fg:          oklch(99% 0 0);
+  --panel:           oklch(100% 0 0);
+  --color-bad:       oklch(48% 0.18 25);
+  color-scheme: light;
+}
+
+/* ── Dark: deep warm charcoal-green, off-white ink. body contrast ~14:1 ── */
+[data-theme="dark"] {
+  --color-paper:     oklch(19% 0.014 150);     /* deep warm ground */
+  --color-paper-2:   oklch(24% 0.016 150);     /* raised panel */
+  --color-ink:       oklch(93% 0.012 110);     /* ~14:1 */
+  --color-ink-soft:  oklch(77% 0.016 145);     /* ~8:1 */
+  --color-faint:     oklch(63% 0.016 145);     /* ~4.8:1 — AA */
+  --color-line:      oklch(92% 0.02 150 / 0.15);
+  --color-herb:      oklch(80% 0.13 148);      /* brighter herb pops on dark */
+  --color-herb-deep: oklch(83% 0.12 150);      /* links bright ~10:1 */
+  --color-herb-soft: oklch(58% 0.11 150);
+  --code-bg:         oklch(15% 0.014 150);
+  --code-fg:         oklch(91% 0.01 110);
+  --btn-bg:          oklch(80% 0.13 148);    /* dark text → ~8:1 AA on dark */
+  --btn-fg:          oklch(18% 0.03 150);
+  --panel:           oklch(23% 0.015 150);
+  --color-bad:       oklch(74% 0.15 25);     /* bright red-pink readable on dark panel */
+  color-scheme: dark;
 }
 
 html {
@@ -25,6 +76,10 @@ html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+/* theme transition — gentle, not flashy */
+html, body, a, .panel { transition: background-color .35s ease, color .35s ease, border-color .35s ease; }
+@media (prefers-reduced-motion: reduce) { html, body, a, .panel { transition: none; } }
+
 body { margin: 0; line-height: 1.7; }
 
 h1, h2, h3 {
@@ -40,12 +95,36 @@ h1 { font-size: clamp(2.6rem, 6.5vw, 5rem); font-weight: 420; }
 .rule { border: 0; border-top: 1px solid var(--color-line); }
 a { color: inherit; text-decoration: none; }
 
+/* theme toggle button */
+.theme-toggle {
+  font-family: var(--font-sans);
+  font-size: .82rem;
+  color: var(--color-ink-soft);
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  padding: .3rem .8rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.theme-toggle:hover { color: var(--color-herb-deep); border-color: var(--color-herb-soft); }
+
+/* book covers */
+.book-cover {
+  border-radius: 6px;
+  border: 1px solid var(--color-line);
+  box-shadow: 0 2px 10px oklch(20% 0.02 150 / .12);
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .prose { max-width: 66ch; }
 .prose p { margin: 1.15em 0; color: var(--color-ink); }
 .prose h2 { margin: 1.9em 0 .4em; font-size: clamp(1.4rem, 3vw, 1.7rem); }
 .prose h3 { margin: 1.5em 0 .3em; font-size: 1.2rem; }
 .prose a { color: var(--color-herb-deep); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 .prose code { background: var(--color-paper-2); padding: .12em .38em; border-radius: 4px; font-size: .88em; font-family: ui-monospace, "SF Mono", monospace; }
-.prose pre { background: oklch(20% 0.018 150); color: oklch(92% 0.01 110); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; font-size: .84rem; line-height: 1.6; }
+.prose pre { background: var(--code-bg); color: var(--code-fg); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; font-size: .84rem; line-height: 1.6; }
 .prose pre code { background: transparent; padding: 0; }
 .prose blockquote { border-left: 2px solid var(--color-herb); padding-left: 1rem; color: var(--color-ink-soft); font-style: italic; margin: 1.2em 0; }
