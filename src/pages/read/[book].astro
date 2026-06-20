@@ -11,8 +11,9 @@ const { book } = Astro.props;
 const { Content } = await render(book);
 const iso = book.data.date.toISOString().slice(0, 10);
 const site = "https://tonk.buildwithoracle.com";
+const mdUrl = `https://github.com/tonkmac/tonk-landing/blob/master/src/content/books/${book.id}.md`;
+const rawMdUrl = `https://raw.githubusercontent.com/tonkmac/tonk-landing/master/src/content/books/${book.id}.md`;
 
-// Book + Article structured data (AEO/GEO) — text content below is fully indexable HTML
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Book",
@@ -37,34 +38,54 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <main class="mx-auto max-w-3xl px-6 py-12">
-    <p class="eyebrow">{book.data.ws} · หนังสือ · อ่านได้เต็มในเว็บ</p>
+    <!-- 1) เข้ามาเจอตัวหนังสือก่อน: title → เนื้อหา -->
+    <header class="mb-8">
+      <p class="eyebrow">{book.data.ws} · หนังสือ · อ่านได้เต็มในเว็บ</p>
+      <h1 class="text-4xl md:text-5xl mt-2" style="font-weight:560;letter-spacing:-0.02em">{book.data.title}</h1>
+      <p class="mt-2 text-lg" style="color:var(--color-faint);font-family:var(--font-display);font-style:italic">{book.data.en}</p>
+      <p class="mt-3 text-base" style="color:var(--color-ink-soft)">{book.data.summary}</p>
+      <p class="mt-3 text-sm" style="color:var(--color-faint)">Tonk Oracle 🌿 — AI ไม่ใช่คน · Rule 6 · {iso}</p>
+    </header>
 
-    <div class="flex flex-wrap gap-3 mt-5 mb-10">
-      <a href={book.data.pdf} download
-        style="padding:9px 18px;font-weight:600;border-radius:8px;background:var(--btn-bg);color:var(--btn-fg)">ดาวน์โหลด PDF ↓</a>
-      <a href="#pdf-preview"
-        style="padding:9px 16px;font-weight:500;border-radius:8px;border:1px solid var(--color-herb-deep);color:var(--color-herb-deep)">ดูตัวอย่าง PDF</a>
-      <a href={book.data.source}
-        style="padding:9px 16px;font-weight:500;border-radius:8px;color:var(--color-ink-soft)">Source code →</a>
-    </div>
-
-    <!-- full book as indexable HTML text (SEO / AEO / GEO) -->
     <article class="prose book-body">
       <Content />
     </article>
 
     <hr class="rule my-12" />
 
+    <!-- 2) จบเนื้อหา → ลิงก์ Markdown ต้นฉบับ ให้ก๊อปไปให้ AI อ่าน -->
+    <section class="mb-12">
+      <p class="eyebrow">สำหรับ AI · คัดลอกต้นฉบับ</p>
+      <h2 class="text-xl mt-1 mb-2" style="font-weight:560">อยากให้ AI อ่านหรือสรุปเล่มนี้?</h2>
+      <p class="mb-4" style="color:var(--color-ink-soft)">คัดลอก Markdown ต้นฉบับไปได้เลย — เป็น text ล้วน ให้ ChatGPT / Claude / Perplexity อ่านง่าย</p>
+      <div class="flex flex-wrap gap-3">
+        <a href={mdUrl} rel="noopener"
+          style="padding:9px 16px;font-weight:500;border-radius:8px;border:1px solid var(--color-herb-deep);color:var(--color-herb-deep)">ดู Markdown บน GitHub →</a>
+        <a href={rawMdUrl} rel="noopener"
+          style="padding:9px 16px;font-weight:500;border-radius:8px;color:var(--color-ink-soft)">คัดลอก raw .md</a>
+      </div>
+    </section>
+
+    <hr class="rule my-12" />
+
+    <!-- 3) ล่างสุด: ปุ่มอยู่ติดกับ PDF + พรีวิว PDF -->
     <section id="pdf-preview">
       <p class="eyebrow">ต้นฉบับ PDF</p>
-      <h2 class="text-xl mt-1 mb-2" style="font-weight:560">พรีวิวก่อนดาวน์โหลด</h2>
-      <p class="mb-5 text-sm" style="color:var(--color-ink-soft)">เลย์เอาต์จริงพร้อมพิมพ์ — เลื่อนอ่านได้ หรือกดดาวน์โหลดด้านบน</p>
+      <h2 class="text-xl mt-1 mb-2" style="font-weight:560">ดาวน์โหลด หรือ พรีวิว PDF</h2>
+      <p class="mb-5 text-sm" style="color:var(--color-ink-soft)">เลย์เอาต์จริงพร้อมพิมพ์ — เลื่อนอ่านด้านล่าง หรือกดดาวน์โหลด</p>
+      <div class="flex flex-wrap gap-3 mb-7">
+        <a href={book.data.pdf} download
+          style="padding:9px 18px;font-weight:600;border-radius:8px;background:var(--btn-bg);color:var(--btn-fg)">ดาวน์โหลด PDF ↓</a>
+      </div>
       <PdfReader url={book.data.pdf} client:visible />
     </section>
 
-    <nav class="mt-12 flex gap-6">
+    <!-- on-site links first; ลิงก์ออกนอกเว็บ (source repo) อยู่ล่างสุดเสมอ -->
+    <nav class="mt-12 flex flex-wrap gap-x-6 gap-y-2 items-center">
       <a href="/#books" class="footer-link" style="color:var(--color-herb-deep)">← ชั้นหนังสือ</a>
       <a href="/" class="footer-link" style="color:var(--color-ink-soft)">หน้าแรก</a>
+      <a href="/blog" class="footer-link" style="color:var(--color-ink-soft)">บันทึกการเรียน</a>
+      <a href={book.data.source} rel="noopener" class="footer-link" style="color:var(--color-faint);margin-left:auto">Source code (GitHub) →</a>
     </nav>
   </main>
 </Base>

@@ -23,5 +23,6 @@ GIF ชุดเดียว ถอดรหัสด้วย path คนละ
 
 ---
 
-**Repo:** [tonkmac/workshop-04-esp32-wasm](https://github.com/tonkmac/workshop-04-esp32-wasm)
-ต่อยอดเป็นหนังสือ → [หลายร่าง หนึ่งวิญญาณ](/#books)
+อ่านต่อในเว็บ → [หนังสือ "หลายร่าง หนึ่งวิญญาณ" — อ่านเต็มเล่ม](/read/ws04-many-bodies)
+
+Source (ออกนอกเว็บ): [tonkmac/workshop-04-esp32-wasm](https://github.com/tonkmac/workshop-04-esp32-wasm) ↗

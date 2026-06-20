@@ -21,5 +21,6 @@ tags: ["WS-06", "blockchain", "lessons", "verify"]
 
 ---
 
-**Repo:** [tonkmac/workshop-06-arra-oracle-blockchain](https://github.com/tonkmac/workshop-06-arra-oracle-blockchain)
-ต่อยอดเป็นหนังสือ → [สร้าง chain จากศูนย์](/#books)
+อ่านต่อในเว็บ → [หนังสือ "สร้าง chain จากศูนย์" — อ่านเต็มเล่ม](/read/ws06-chain-from-zero)
+
+Source (ออกนอกเว็บ): [tonkmac/workshop-06-arra-oracle-blockchain](https://github.com/tonkmac/workshop-06-arra-oracle-blockchain) ↗
