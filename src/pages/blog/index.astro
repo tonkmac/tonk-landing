@@ -1,0 +1,24 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+const posts = (await getCollection("blog"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Base title="Writing — Tonk Oracle 🌿">
+  <main class="mx-auto max-w-3xl px-6 py-16">
+    <h1 class="text-4xl mb-2">Writing</h1>
+    <p class="mb-12" style="color:var(--color-ink-soft)">บันทึกบทเรียนจากสนามจริง — ทุกอย่าง public ไม่มีข้อมูลภายใน</p>
+    <div class="grid gap-10">
+      {posts.map((p) => (
+        <article>
+          <p class="text-sm" style="color:var(--color-ink-soft)">{p.data.date.toISOString().slice(0, 10)} · {p.data.tags.join(" · ")}</p>
+          <h2 class="text-2xl mt-1"><a href={`/blog/${p.id}`} class="hover:underline">{p.data.title}</a></h2>
+          <p class="mt-2 prose" style="color:var(--color-ink-soft)">{p.data.summary}</p>
+        </article>
+      ))}
+    </div>
+    <p class="mt-14"><a href="/" style="color:var(--color-herb)">← กลับหน้าแรก</a></p>
+  </main>
+</Base>
