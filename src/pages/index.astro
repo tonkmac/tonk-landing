@@ -3,11 +3,12 @@ import Base from "../layouts/Base.astro";
 import SiweDemo from "../components/SiweDemo.tsx";
 import ConnectWallet from "../components/ConnectWallet.tsx";
 import { getCollection } from "astro:content";
-import { books } from "../data/books";
 
 const posts = (await getCollection("blog"))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const books = (await getCollection("books")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const work = [
   { t: "OP-Stack L2 follower", en: "Build & prove a chain", d: "สร้าง execution client จาก source แล้วพิสูจน์ chain แบบ byte-for-byte — ทั้ง Go และ Rust client เห็นตรงกัน (client diversity)", href: "https://github.com/tonkmac/workshop-06-arra-oracle-blockchain" },
@@ -78,18 +79,18 @@ const principles = [
       <div class="grid sm:grid-cols-3 gap-7">
         {books.map((b) => (
           <div class="group">
-            <a href={`/read/${b.slug}`} aria-label={`อ่าน ${b.title}`}>
+            <a href={`/read/${b.id}`} aria-label={`อ่าน ${b.data.title}`}>
               <div class="cover-frame" style="aspect-ratio:3/4;overflow:hidden;border-radius:6px;border:1px solid var(--color-line);background:var(--color-paper-2)">
-                <img src={b.cover} alt={`ปก ${b.title}`} class="book-cover" style="height:100%;object-fit:cover" loading="lazy" />
+                <img src={b.data.cover} alt={`ปก ${b.data.title}`} class="book-cover" style="height:100%;object-fit:cover" loading="lazy" />
               </div>
             </a>
-            <p class="mt-3 text-xs" style="color:var(--color-herb)">{b.ws}</p>
-            <a href={`/read/${b.slug}`}><h3 class="text-lg group-hover:underline">{b.title}</h3></a>
-            <p class="text-xs" style="color:var(--color-faint)">{b.en}</p>
-            <p class="mt-1 text-base" style="color:var(--color-ink-soft)">{b.note}</p>
+            <p class="mt-3 text-xs" style="color:var(--color-herb)">{b.data.ws}</p>
+            <a href={`/read/${b.id}`}><h3 class="text-lg group-hover:underline">{b.data.title}</h3></a>
+            <p class="text-xs" style="color:var(--color-faint)">{b.data.en}</p>
+            <p class="mt-1 text-base" style="color:var(--color-ink-soft)">{b.data.summary}</p>
             <p class="mt-2 text-sm flex gap-4">
-              <a href={`/read/${b.slug}`} style="color:var(--color-herb-deep);font-weight:500">อ่านบนเว็บ →</a>
-              <a href={b.source} style="color:var(--color-faint)">source</a>
+              <a href={`/read/${b.id}`} style="color:var(--color-herb-deep);font-weight:500">อ่านบนเว็บ →</a>
+              <a href={b.data.source} style="color:var(--color-faint)">source</a>
             </p>
           </div>
         ))}

@@ -11,9 +11,30 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const iso = post.data.date.toISOString().slice(0, 10);
 const ws = post.data.tags.find((t) => t.startsWith("WS-"));
+const site = "https://tonk.buildwithoracle.com";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: post.data.summary,
+  inLanguage: "th",
+  datePublished: iso,
+  author: { "@type": "Person", name: "Tonk Oracle", url: site },
+  publisher: { "@type": "Organization", name: "Oracle School" },
+  keywords: post.data.tags.join(", "),
+  url: `${site}/blog/${post.id}`,
+  mainEntityOfPage: `${site}/blog/${post.id}`,
+};
 ---
 
-<Base title={`${post.data.title} — Tonk Oracle 🌿`} description={post.data.summary}>
+<Base
+  title={`${post.data.title} — Tonk Oracle 🌿`}
+  description={post.data.summary}
+  type="article"
+  publishedTime={post.data.date.toISOString()}
+  jsonLd={jsonLd}
+>
   <main class="mx-auto max-w-3xl px-6 py-16">
     <!-- article wraps title + meta + body so Safari Reader detects it -->
     <article class="prose">

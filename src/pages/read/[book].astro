@@ -1,32 +1,70 @@
 ---
 import Base from "../../layouts/Base.astro";
 import PdfReader from "../../components/PdfReader.tsx";
-import { books } from "../../data/books";
+import { getCollection, render } from "astro:content";
 
-export function getStaticPaths() {
-  return books.map((b) => ({ params: { book: b.slug }, props: { book: b } }));
+export async function getStaticPaths() {
+  const books = await getCollection("books");
+  return books.map((book) => ({ params: { book: book.id }, props: { book } }));
 }
 const { book } = Astro.props;
+const { Content } = await render(book);
+const iso = book.data.date.toISOString().slice(0, 10);
+const site = "https://tonk.buildwithoracle.com";
+
+// Book + Article structured data (AEO/GEO) — text content below is fully indexable HTML
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Book",
+  name: book.data.title,
+  alternateName: book.data.en,
+  inLanguage: "th",
+  author: { "@type": "Person", name: "Tonk Oracle", url: site },
+  datePublished: iso,
+  about: book.data.summary,
+  url: `${site}/read/${book.id}`,
+  image: new URL(book.data.cover, site).href,
+  publisher: { "@type": "Organization", name: "Oracle School" },
+};
 ---
 
-<Base title={`${book.title} — Tonk Oracle 🌿`} description={book.note}>
-  <main class="mx-auto max-w-4xl px-6 py-12">
-    <p class="eyebrow">{book.ws} · อ่านบนเว็บได้เลย</p>
-    <h1 class="text-3xl md:text-4xl mt-1" style="font-weight:520">{book.title}</h1>
-    <p class="mt-1" style="color:var(--color-faint);font-family:var(--font-display);font-style:italic">{book.en}</p>
-    <p class="mt-3 prose" style="color:var(--color-ink-soft)">{book.note}</p>
+<Base
+  title={`${book.data.title} — Tonk Oracle 🌿`}
+  description={book.data.summary}
+  type="article"
+  image={book.data.cover}
+  publishedTime={book.data.date.toISOString()}
+  jsonLd={jsonLd}
+>
+  <main class="mx-auto max-w-3xl px-6 py-12">
+    <p class="eyebrow">{book.data.ws} · หนังสือ · อ่านได้เต็มในเว็บ</p>
 
-    <div class="flex flex-wrap gap-3 mt-6 mb-10">
-      <a href={book.pdf} download
+    <div class="flex flex-wrap gap-3 mt-5 mb-10">
+      <a href={book.data.pdf} download
         style="padding:9px 18px;font-weight:600;border-radius:8px;background:var(--btn-bg);color:var(--btn-fg)">ดาวน์โหลด PDF ↓</a>
-      <a href={book.source}
-        style="padding:9px 16px;font-weight:500;border-radius:8px;border:1px solid var(--color-herb-deep);color:var(--color-herb-deep)">Source code →</a>
-      <a href="/#books"
-        style="padding:9px 16px;font-weight:500;border-radius:8px;color:var(--color-ink-soft)">← ชั้นหนังสือ</a>
+      <a href="#pdf-preview"
+        style="padding:9px 16px;font-weight:500;border-radius:8px;border:1px solid var(--color-herb-deep);color:var(--color-herb-deep)">ดูตัวอย่าง PDF</a>
+      <a href={book.data.source}
+        style="padding:9px 16px;font-weight:500;border-radius:8px;color:var(--color-ink-soft)">Source code →</a>
     </div>
 
-    <PdfReader url={book.pdf} client:visible />
+    <!-- full book as indexable HTML text (SEO / AEO / GEO) -->
+    <article class="prose book-body">
+      <Content />
+    </article>
 
-    <nav class="mt-12"><a href="/" style="color:var(--color-herb-deep)">← กลับหน้าแรก</a></nav>
+    <hr class="rule my-12" />
+
+    <section id="pdf-preview">
+      <p class="eyebrow">ต้นฉบับ PDF</p>
+      <h2 class="text-xl mt-1 mb-2" style="font-weight:560">พรีวิวก่อนดาวน์โหลด</h2>
+      <p class="mb-5 text-sm" style="color:var(--color-ink-soft)">เลย์เอาต์จริงพร้อมพิมพ์ — เลื่อนอ่านได้ หรือกดดาวน์โหลดด้านบน</p>
+      <PdfReader url={book.data.pdf} client:visible />
+    </section>
+
+    <nav class="mt-12 flex gap-6">
+      <a href="/#books" class="footer-link" style="color:var(--color-herb-deep)">← ชั้นหนังสือ</a>
+      <a href="/" class="footer-link" style="color:var(--color-ink-soft)">หน้าแรก</a>
+    </nav>
   </main>
 </Base>
