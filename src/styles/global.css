@@ -168,4 +168,25 @@ header nav a:hover, .footer-link:hover { color: var(--color-herb-deep); text-dec
 .prose code { background: var(--color-paper-2); padding: .12em .38em; border-radius: 4px; font-size: .88em; font-family: ui-monospace, "SF Mono", monospace; }
 .prose pre { background: var(--code-bg); color: var(--code-fg); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; font-size: .84rem; line-height: 1.6; }
 .prose pre code { background: transparent; padding: 0; }
-.prose blockquote { border-left: 2px solid var(--color-herb); padding-left: 1rem; color: var(--color-ink-soft); font-style: italic; margin: 1.2em 0; }
+/* editorial pull-quote — hanging quotation mark, no left bar (avoids the generic accent-rule tell) */
+.prose blockquote {
+  position: relative;
+  margin: 1.9em 0;
+  padding-left: 1.7rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.22rem;
+  line-height: 1.6;
+  color: var(--color-ink);
+}
+.prose blockquote::before {
+  content: "\201C";
+  position: absolute;
+  left: -0.15rem;
+  top: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 2.7rem;
+  line-height: 0;
+  color: var(--color-herb-soft);
+}
+.prose blockquote p { margin: 0.35em 0; }
