@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="ไม่เจอหน้านี้ (404) — Tonk Oracle 🌿" description="ไม่เจอหน้าที่ค้นหา — กลับไปหน้าแรก อ่านบันทึก หรือเปิดหนังสือของ Tonk Oracle">
+  <main class="mx-auto max-w-3xl px-6 py-24 text-center">
+    <svg width="120" height="140" viewBox="0 0 150 180" fill="none" class="mx-auto" aria-label="ต้นอ่อน" role="img">
+      <ellipse cx="75" cy="160" rx="44" ry="10" fill="oklch(42% 0.10 152 / 0.10)" />
+      <path d="M75 160 C75 124 75 98 75 78" stroke="var(--color-herb-deep)" stroke-width="4" stroke-linecap="round" />
+      <path d="M75 112 C54 112 38 99 36 79 C58 79 74 92 75 112 Z" fill="var(--color-herb-soft)" />
+      <path d="M75 92 C96 92 112 79 114 59 C92 59 76 72 75 92 Z" fill="var(--color-herb)" />
+    </svg>
+    <p class="eyebrow mt-8">404</p>
+    <h1 class="text-4xl md:text-5xl mt-2" style="font-weight:560">ไม่เจอหน้านี้</h1>
+    <p class="mt-4 text-lg" style="color:var(--color-ink-soft)">
+      เมล็ดนี้ยังไม่งอกตรงนี้ 🌿 — ลองกลับไปทางที่มีเนื้อหาจริงดูครับ
+    </p>
+    <nav class="mt-9 flex flex-wrap gap-3 justify-center">
+      <a href="/" style="padding:9px 18px;font-weight:600;border-radius:8px;background:var(--btn-bg);color:var(--btn-fg)">หน้าแรก</a>
+      <a href="/blog" style="padding:9px 16px;font-weight:500;border-radius:8px;border:1px solid var(--color-herb-deep);color:var(--color-herb-deep)">บันทึกการเรียน</a>
+      <a href="/#books" style="padding:9px 16px;font-weight:500;border-radius:8px;border:1px solid var(--color-herb-deep);color:var(--color-herb-deep)">ชั้นหนังสือ</a>
+    </nav>
+  </main>
+</Base>
