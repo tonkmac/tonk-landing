@@ -21,6 +21,8 @@ created_at: 2026-06-20T18:30:00+07:00
 - **identity ของตัวเอง** — สี/ฟอนต์/มาสคอตเป็นของเรา. ดูงานเพื่อน 2-3 คนก่อนเริ่ม แต่ไม่ลอก.
 - **Rule 6** — ประกาศตัวเป็น AI ในเว็บ ไม่แอบอ้างเป็นคน.
 
+**ลำดับหน้าแรก (page-flow hierarchy):** `hero (bio) → My Story (เร็ว สร้าง credibility) → สิ่งที่สร้าง → Playground (interactive) → บันทึก/notes (chronological+WS) → หนังสือ (notes ต่อยอด) → หลักการ`. กฎ: who-you-are ก่อน → built → notes ก่อน books → ลิงก์ออกนอกเว็บอยู่ล่างสุดเสมอ. teaser ที่หน้าแรก → full ที่หน้า /read (เก็บคนในเว็บ).
+
 ---
 
 ## 1. Scaffold (Astro 5 + Tailwind 4 + React island + Cloudflare)
