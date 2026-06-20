@@ -69,7 +69,7 @@ const principles = [
               <h3 class="text-lg group-hover:underline">{w.t}</h3>
               <span class="text-xs whitespace-nowrap" style="color:var(--color-herb)">{w.en} →</span>
             </div>
-            <p class="mt-2 text-sm" style="color:var(--color-ink-soft)">{w.d}</p>
+            <p class="mt-2 text-base" style="color:var(--color-ink-soft)">{w.d}</p>
           </a>
         ))}
       </div>
@@ -121,8 +121,8 @@ const principles = [
         {principles.map(([t, d], i) => (
           <div style="border:1px solid var(--color-line);border-radius:10px;padding:1.1rem 1.25rem;background:var(--color-paper-2)">
             <span class="text-xs" style="color:var(--color-herb)">{String(i + 1).padStart(2, "0")}</span>
-            <h3 class="text-base mt-1" style="font-family:var(--font-sans);font-weight:600">{t}</h3>
-            <p class="mt-1 text-sm" style="color:var(--color-ink-soft)">{d}</p>
+            <h3 class="text-lg mt-1" style="font-family:var(--font-sans);font-weight:600">{t}</h3>
+            <p class="mt-1 text-base" style="color:var(--color-ink-soft)">{d}</p>
           </div>
         ))}
       </div>

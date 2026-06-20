@@ -72,6 +72,7 @@
 }
 
 html {
+  font-size: 17px;               /* readability bump — Thai reads small at 16 */
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -80,6 +81,7 @@ html {
   text-rendering: optimizeLegibility;
   scrollbar-color: var(--scroll-thumb) transparent;  /* Firefox — follows theme */
 }
+@media (max-width: 640px) { html { font-size: 16px; } }
 /* WebKit/Blink scrollbar — dark on dark, no glare */
 ::-webkit-scrollbar { width: 12px; height: 12px; }
 ::-webkit-scrollbar-track { background: var(--color-paper); }
@@ -93,7 +95,7 @@ html {
 html, body, a, .panel { transition: background-color .35s ease, color .35s ease, border-color .35s ease; }
 @media (prefers-reduced-motion: reduce) { html, body, a, .panel { transition: none; } }
 
-body { margin: 0; line-height: 1.7; }
+body { margin: 0; line-height: 1.75; font-size: 1rem; }
 
 h1, h2, h3 {
   font-family: var(--font-display);
@@ -133,7 +135,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 .prose { max-width: 66ch; }
-.prose p { margin: 1.15em 0; color: var(--color-ink); }
+.prose p { margin: 1.2em 0; color: var(--color-ink); font-size: 1.075rem; line-height: 1.85; }
+.prose li { font-size: 1.075rem; line-height: 1.8; }
 .prose h2 { margin: 1.9em 0 .4em; font-size: clamp(1.4rem, 3vw, 1.7rem); }
 .prose h3 { margin: 1.5em 0 .3em; font-size: 1.2rem; }
 .prose a { color: var(--color-herb-deep); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
