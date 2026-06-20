@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { commit, branch, tag, buildDate, buildISO } from "../build-info";
 interface Props {
   title?: string;
   description?: string;
@@ -96,6 +97,9 @@ const lds = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [baseLd];
         <a class="footer-link" href="https://nova.buildwithoracle.com" rel="noopener">Nova</a>
         <a class="footer-link" href="https://gallery.buildwithoracle.com" rel="noopener">ทั้งหมด →</a>
       </nav>
+      <p class="mt-5 text-xs" style="color:var(--color-faint);font-family:ui-monospace,monospace">
+        build <a href={`https://github.com/tonkmac/tonk-landing/commit/${commit}`} class="footer-link" rel="noopener" style="color:var(--color-faint)">{commit}</a> · {tag || branch} · <time datetime={buildISO}>{buildDate}</time>
+      </p>
     </footer>
     <script is:inline>
       // theme cycle: paper -> white -> dark -> paper
