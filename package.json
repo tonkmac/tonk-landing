@@ -8,9 +8,10 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^5.17.1",
     "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/react": "^4.2.0",
+    "astro": "^5.17.1",
+    "pdfjs-dist": "^6.0.227",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "viem": "^2.21.0"
