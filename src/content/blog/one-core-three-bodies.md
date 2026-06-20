@@ -27,4 +27,4 @@ core เดียว สามร่าง — เหมือนหลักข
 ---
 
 **Repos:** [tonkmac/workshop-03-esp32-wasm](https://github.com/tonkmac/workshop-03-esp32-wasm) · [workshop-03-upstream-digest](https://github.com/tonkmac/workshop-03-upstream-digest)
-ต่อยอดเป็นหนังสือ → [หลายร่าง หนึ่งวิญญาณ](#books)
+ต่อยอดเป็นหนังสือ → [หลายร่าง หนึ่งวิญญาณ](/#books)

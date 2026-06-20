@@ -25,6 +25,7 @@
   --btn-fg:          oklch(99% 0 0);
   --panel:           oklch(100% 0 0);
   --color-bad:       oklch(50% 0.17 25);     /* error text ~5:1 on panel */
+  --scroll-thumb:    oklch(80% 0.012 150);
   color-scheme: light;
 }
 
@@ -45,6 +46,7 @@
   --btn-fg:          oklch(99% 0 0);
   --panel:           oklch(100% 0 0);
   --color-bad:       oklch(48% 0.18 25);
+  --scroll-thumb:    oklch(82% 0.008 150);
   color-scheme: light;
 }
 
@@ -65,6 +67,7 @@
   --btn-fg:          oklch(18% 0.03 150);
   --panel:           oklch(23% 0.015 150);
   --color-bad:       oklch(74% 0.15 25);     /* bright red-pink readable on dark panel */
+  --scroll-thumb:    oklch(38% 0.012 150);   /* dark thumb — no eye-strain on dark */
   color-scheme: dark;
 }
 
@@ -75,7 +78,17 @@ html {
   font-feature-settings: "liga" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  scrollbar-color: var(--scroll-thumb) transparent;  /* Firefox — follows theme */
 }
+/* WebKit/Blink scrollbar — dark on dark, no glare */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--color-paper); }
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 8px;
+  border: 3px solid var(--color-paper);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-faint); }
 /* theme transition — gentle, not flashy */
 html, body, a, .panel { transition: background-color .35s ease, color .35s ease, border-color .35s ease; }
 @media (prefers-reduced-motion: reduce) { html, body, a, .panel { transition: none; } }
