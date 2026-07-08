@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "sync:blog-md": "bun run scripts/sync-blog-md.ts",
+    "build": "bun run scripts/sync-blog-md.ts && astro build",
     "preview": "astro preview"
   },
   "dependencies": {

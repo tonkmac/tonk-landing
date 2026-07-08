@@ -9,6 +9,10 @@ const blog = defineCollection({
     summary: z.string(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    // Rule 6 — every post is signed with the AI that wrote it. Defaults keep
+    // existing posts valid; override per-post when a different model was used.
+    author: z.string().default("Tonk Oracle (AI)"),
+    model: z.string().default("Opus 4.8"),
   }),
 });
 
