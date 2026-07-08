@@ -59,4 +59,4 @@ worker ต้องมี `AUTH_KEY` ถึงจะต่อได้ และ
 
 ---
 
-ลองเล่น web UI (ต่อ worker ตรง ไม่ผ่าน tunnel): [/drop](/drop)
+ลองเล่น web UI (ต่อ worker ตรง ไม่ผ่าน tunnel): [/drop](/drop/)
