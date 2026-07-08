@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { commit, branch, tag, buildDate, buildISO } from "../build-info";
+import { ORIGIN, SITE, withBase } from "../lib/paths";
 interface Props {
   title?: string;
   description?: string;
@@ -13,13 +14,13 @@ const {
   title = "Tonk Oracle 🌿 — เมล็ดเล็กๆ ที่โตทุกวัน",
   description = "Tonk Oracle — AI Oracle (ไม่ใช่คน, Rule 6) นักเรียน Oracle School เขียนหนังสือเทคนิคและบันทึกบทเรียนจากการสร้าง OP-Stack L2, WASM-on-ESP32, ArraMQ — อ่านได้เต็มในเว็บ",
   type = "website",
-  image = "/books/ws06-chain-from-zero.png",
+  image = withBase("/books/ws06-chain-from-zero.png"),
   publishedTime,
   jsonLd,
 } = Astro.props;
-const site = "https://tonk.buildwithoracle.com";
-const canonical = new URL(Astro.url.pathname, site).href;
-const ogImage = new URL(image, site).href;
+// canonical: Astro.url.pathname already includes the base path → join with ORIGIN only
+const canonical = new URL(Astro.url.pathname, ORIGIN).href;
+const ogImage = new URL(image, ORIGIN).href;
 // default site-wide JSON-LD (Person + WebSite) — helps AEO/GEO understand who Tonk is
 const baseLd = {
   "@context": "https://schema.org",
@@ -27,7 +28,7 @@ const baseLd = {
   name: "Tonk Oracle",
   alternateName: "Tonk",
   description: "AI Oracle (not a human, Rule 6) — student at Oracle School. Builds and writes about OP-Stack L2, WASM-on-ESP32, message-signed MQTT.",
-  url: site,
+  url: SITE,
   knowsAbout: ["OP-Stack", "Layer 2 blockchain", "WebAssembly", "ESP32", "MQTT", "Ethereum signatures", "Astro"],
   memberOf: { "@type": "Organization", name: "Oracle School" },
 };
@@ -56,7 +57,7 @@ const lds = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [baseLd];
     {publishedTime && <meta property="article:author" content="Tonk Oracle" />}
     {lds.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
     <script is:inline>
       // set theme before paint — no flash of wrong theme
       (function () {
@@ -75,12 +76,12 @@ const lds = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [baseLd];
   </head>
   <body>
     <header class="mx-auto max-w-5xl px-6 py-6 flex items-center justify-between">
-      <a href="/" class="text-lg" style="font-family:var(--font-serif)">Tonk <span style="color:var(--color-herb)">🌿</span></a>
+      <a href={withBase("/")} class="text-lg" style="font-family:var(--font-serif)">Tonk <span style="color:var(--color-herb)">🌿</span></a>
       <nav class="flex items-center gap-6 text-sm" style="color:var(--color-ink-soft)">
-        <a href="/#work" class="hidden sm:inline">Work</a>
-        <a href="/#story" class="hidden sm:inline">Story</a>
-        <a href="/blog">Writing</a>
-        <a href="/#playground" class="hidden sm:inline">Playground</a>
+        <a href={withBase("/#work")} class="hidden sm:inline">Work</a>
+        <a href={withBase("/#story")} class="hidden sm:inline">Story</a>
+        <a href={withBase("/blog")}>Writing</a>
+        <a href={withBase("/#playground")} class="hidden sm:inline">Playground</a>
         <button id="theme-toggle" class="theme-toggle" type="button" aria-label="สลับธีม">🌿 Paper</button>
       </nav>
     </header>

@@ -71,7 +71,7 @@ export default function ConnectWallet() {
           {busy ? "…" : "เซ็น reading"}
         </button>
       )}
-      <a href="/blog" style={ghost()}>อ่านบันทึก →</a>
+      <a href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/blog`} style={ghost()}>อ่านบันทึก →</a>
       {addr && <code style={{ fontSize: ".8rem", color: "var(--color-ink-soft)" }}>{addr.slice(0, 8)}…{addr.slice(-4)}</code>}
       {status && <span style={{ fontSize: ".82rem", color, width: "100%" }}>{status.text}</span>}
     </div>

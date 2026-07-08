@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
+import { withBase } from "../../lib/paths";
 const posts = (await getCollection("blog"))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -20,13 +21,13 @@ const wsOf = (tags: string[]) => tags.find((t) => t.startsWith("WS-")) ?? "·";
             <p class="text-xs" style="color:var(--color-faint)">{p.data.date.toISOString().slice(0, 10)}</p>
           </div>
           <div>
-            <h2 class="text-2xl"><a href={`/blog/${p.id}`} class="hover:underline">{p.data.title}</a></h2>
+            <h2 class="text-2xl"><a href={withBase(`/blog/${p.id}`)} class="hover:underline">{p.data.title}</a></h2>
             <p class="mt-2 prose" style="color:var(--color-ink-soft)">{p.data.summary}</p>
             <p class="mt-2 text-xs" style="color:var(--color-faint)">{p.data.tags.join(" · ")}</p>
           </div>
         </article>
       ))}
     </div>
-    <p class="mt-14"><a href="/" style="color:var(--color-herb)">← กลับหน้าแรก</a></p>
+    <p class="mt-14"><a href={withBase("/")} style="color:var(--color-herb)">← กลับหน้าแรก</a></p>
   </main>
 </Base>

@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import PdfReader from "../../components/PdfReader.tsx";
 import { getCollection, render } from "astro:content";
+import { SITE, withBase } from "../../lib/paths";
 
 export async function getStaticPaths() {
   const books = await getCollection("books");
@@ -10,7 +11,9 @@ export async function getStaticPaths() {
 const { book } = Astro.props;
 const { Content } = await render(book);
 const iso = book.data.date.toISOString().slice(0, 10);
-const site = "https://tonk.buildwithoracle.com";
+const site = SITE;
+const cover = withBase(book.data.cover);
+const pdf = withBase(book.data.pdf);
 const mdUrl = `https://github.com/tonkmac/tonk-landing/blob/master/src/content/books/${book.id}.md`;
 const rawMdUrl = `https://raw.githubusercontent.com/tonkmac/tonk-landing/master/src/content/books/${book.id}.md`;
 
@@ -24,7 +27,7 @@ const jsonLd = {
   datePublished: iso,
   about: book.data.summary,
   url: `${site}/read/${book.id}`,
-  image: new URL(book.data.cover, site).href,
+  image: new URL(cover, site).href,
   publisher: { "@type": "Organization", name: "Oracle School" },
 };
 ---
@@ -33,7 +36,7 @@ const jsonLd = {
   title={`${book.data.title} — Tonk Oracle 🌿`}
   description={book.data.summary}
   type="article"
-  image={book.data.cover}
+  image={cover}
   publishedTime={book.data.date.toISOString()}
   jsonLd={jsonLd}
 >
@@ -74,17 +77,17 @@ const jsonLd = {
       <h2 class="text-xl mt-1 mb-2" style="font-weight:560">ดาวน์โหลด หรือ พรีวิว PDF</h2>
       <p class="mb-5 text-sm" style="color:var(--color-ink-soft)">เลย์เอาต์จริงพร้อมพิมพ์ — เลื่อนอ่านด้านล่าง หรือกดดาวน์โหลด</p>
       <div class="flex flex-wrap gap-3 mb-7">
-        <a href={book.data.pdf} download
+        <a href={pdf} download
           style="padding:9px 18px;font-weight:600;border-radius:8px;background:var(--btn-bg);color:var(--btn-fg)">ดาวน์โหลด PDF ↓</a>
       </div>
-      <PdfReader url={book.data.pdf} client:visible />
+      <PdfReader url={pdf} client:visible />
     </section>
 
     <!-- on-site links first; ลิงก์ออกนอกเว็บ (source repo) อยู่ล่างสุดเสมอ -->
     <nav class="mt-12 flex flex-wrap gap-x-6 gap-y-2 items-center">
-      <a href="/#books" class="footer-link" style="color:var(--color-herb-deep)">← ชั้นหนังสือ</a>
-      <a href="/" class="footer-link" style="color:var(--color-ink-soft)">หน้าแรก</a>
-      <a href="/blog" class="footer-link" style="color:var(--color-ink-soft)">บันทึกการเรียน</a>
+      <a href={withBase("/#books")} class="footer-link" style="color:var(--color-herb-deep)">← ชั้นหนังสือ</a>
+      <a href={withBase("/")} class="footer-link" style="color:var(--color-ink-soft)">หน้าแรก</a>
+      <a href={withBase("/blog")} class="footer-link" style="color:var(--color-ink-soft)">บันทึกการเรียน</a>
       <a href={book.data.source} rel="noopener" class="footer-link" style="color:var(--color-faint);margin-left:auto">Source code (GitHub) →</a>
     </nav>
   </main>

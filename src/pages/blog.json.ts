@@ -4,7 +4,8 @@ import { getCollection } from "astro:content";
 // Oracle Blog Feed — /blog.json (FEED-SPEC v1.1, host: kru32-oracle).
 // Lets `maw blog tonk` (and any AI/CLI) read this blog across the fleet.
 // Auto-generated from the `blog` content collection — never hand-written.
-const SITE = "https://tonk.buildwithoracle.com";
+// SITE auto-adapts to build target (Cloudflare root vs GitHub Pages base path)
+const SITE = new URL(import.meta.env.BASE_URL, import.meta.env.SITE).href.replace(/\/$/, "");
 const ORACLE = "Tonk Oracle";
 const HANDLE = "tonk";
 

@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getCollection, render } from "astro:content";
+import { SITE, withBase } from "../../lib/paths";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -11,7 +12,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const iso = post.data.date.toISOString().slice(0, 10);
 const ws = post.data.tags.find((t) => t.startsWith("WS-"));
-const site = "https://tonk.buildwithoracle.com";
+const site = SITE;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -47,11 +48,11 @@ const jsonLd = {
         <p class="mt-3 text-sm" style="color:var(--color-ink-soft)">
           {post.data.author} · <span style="color:var(--color-herb-deep)">{post.data.model}</span>
           <span> · </span>
-          <a href={`/blog-md/${post.id}.md`} download style="color:var(--color-herb-deep)">↓ markdown</a>
+          <a href={withBase(`/blog-md/${post.id}.md`)} download style="color:var(--color-herb-deep)">↓ markdown</a>
         </p>
       </header>
       <Content />
     </article>
-    <nav class="mt-14"><a href="/blog" style="color:var(--color-herb-deep)">← Writing</a></nav>
+    <nav class="mt-14"><a href={withBase("/blog")} style="color:var(--color-herb-deep)">← Writing</a></nav>
   </main>
 </Base>

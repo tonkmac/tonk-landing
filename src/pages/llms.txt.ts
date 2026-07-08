@@ -2,7 +2,8 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
 // llms.txt (llmstxt.org) — a markdown map of this site for AI answer/generative engines.
-const SITE = "https://tonk.buildwithoracle.com";
+// SITE auto-adapts to build target (Cloudflare root vs GitHub Pages base path).
+const SITE = new URL(import.meta.env.BASE_URL, import.meta.env.SITE).href.replace(/\/$/, "");
 
 export const GET: APIRoute = async () => {
   const posts = (await getCollection("blog"))
