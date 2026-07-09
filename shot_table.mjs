@@ -1,0 +1,14 @@
+import { chromium } from "playwright-core";
+import { readdirSync } from "fs";
+const g = readdirSync(process.env.HOME+"/.cache/ms-playwright").find(d=>d.startsWith("chromium-"));
+const b = await chromium.launch({ executablePath:`${process.env.HOME}/.cache/ms-playwright/${g}/chrome-linux/chrome` });
+const ctx = await b.newContext({ viewport:{width:1000,height:800}, deviceScaleFactor:2 });
+const p = await ctx.newPage();
+await p.goto("https://tonkmac.github.io/tonk-landing/", {waitUntil:"load"});
+await p.evaluate(()=>localStorage.setItem("tonk-theme","paper"));
+await p.goto("https://tonkmac.github.io/tonk-landing/blog/discord-channel-mcp-internals/", {waitUntil:"networkidle"});
+await p.waitForTimeout(500);
+await p.evaluate(()=>{ const t=document.querySelector(".prose table"); if(t) t.scrollIntoView({block:"center"}); });
+await p.waitForTimeout(400);
+await p.screenshot({ path:"screenshots/table-border.png" });
+await b.close(); console.log("shot");
