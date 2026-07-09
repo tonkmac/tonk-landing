@@ -177,7 +177,9 @@ header nav a:hover, .footer-link:hover { color: var(--color-herb-deep); text-dec
 .prose h3 { margin: 1.5em 0 .3em; font-size: 1.2rem; }
 .prose a { color: var(--color-herb-deep); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 .prose code { background: var(--color-paper-2); padding: .12em .38em; border-radius: 4px; font-size: .88em; font-family: ui-monospace, "SF Mono", monospace; }
-.prose pre { background: var(--code-bg); color: var(--code-fg); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; font-size: .84rem; line-height: 1.6; }
+.prose pre { background: var(--code-bg); color: var(--code-fg); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; font-size: .84rem; line-height: 1.6; margin: 1.4em 0; }
+/* code block ที่ติดกัน (pre ตาม pre) — เว้นช่องให้ชัด ไม่ให้กล่องดำเชื่อมกัน */
+.prose pre + pre { margin-top: 1.6em; }
 .prose pre code { background: transparent; padding: 0; }
 /* tables — visible borders + header + zebra, theme-aware (readable ทุกธีม) */
 .prose > table, .prose table { display: block; overflow-x: auto; width: 100%; border-collapse: collapse; margin: 1.6em 0; font-size: .95rem; }
