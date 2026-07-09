@@ -179,6 +179,12 @@ header nav a:hover, .footer-link:hover { color: var(--color-herb-deep); text-dec
 .prose code { background: var(--color-paper-2); padding: .12em .38em; border-radius: 4px; font-size: .88em; font-family: ui-monospace, "SF Mono", monospace; }
 .prose pre { background: var(--code-bg); color: var(--code-fg); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; font-size: .84rem; line-height: 1.6; }
 .prose pre code { background: transparent; padding: 0; }
+/* tables — visible borders + header + zebra, theme-aware (readable ทุกธีม) */
+.prose > table, .prose table { display: block; overflow-x: auto; width: 100%; border-collapse: collapse; margin: 1.6em 0; font-size: .95rem; }
+.prose th, .prose td { border: 1px solid var(--color-line); padding: .5em .8em; text-align: left; vertical-align: top; line-height: 1.55; }
+.prose thead th { background: var(--color-paper-2); font-weight: 600; color: var(--color-ink); border-bottom: 2px solid var(--color-herb-deep); }
+.prose tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 55%, transparent); }
+.prose td code, .prose th code { font-size: .82em; white-space: nowrap; }
 /* editorial pull-quote — hanging quotation mark, no left bar (avoids the generic accent-rule tell) */
 .prose blockquote {
   position: relative;
